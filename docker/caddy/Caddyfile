@@ -23,3 +23,13 @@ client-00.oauth.labs {
     import common
     reverse_proxy client-00:3000
 }
+
+server-01.oauth.labs {
+    import common
+    reverse_proxy server-01:3000
+}
+
+client-01.oauth.labs {
+    import common
+    reverse_proxy client-01:3000
+}

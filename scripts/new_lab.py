@@ -20,7 +20,8 @@ def create_lab(number: int) -> None:
         raise FileExistsError(target)
     compose = ROOT / "docker-compose.yaml"
     compose_text = compose.read_text()
-    if "secrets:\n" not in compose_text or "          - client-00.oauth.labs\n" not in compose_text:
+    secrets_marker = "\nsecrets:\n  db_root_password:"
+    if secrets_marker not in compose_text or "          - client-00.oauth.labs\n" not in compose_text:
         raise ValueError("compose file is missing the baseline insertion points")
     caddyfile = ROOT / "docker" / "caddy" / "Caddyfile"
     if not caddyfile.is_file():
@@ -98,7 +99,11 @@ def create_lab(number: int) -> None:
     mem_limit: 1g
 
 """
-    compose_text = compose_text.replace("secrets:\n", services + "secrets:\n", 1)
+    compose_text = compose_text.replace(
+        secrets_marker,
+        "\n" + services + "secrets:\n  db_root_password:",
+        1,
+    )
     compose_text = compose_text.replace(
         "          - client-00.oauth.labs\n",
         f"          - client-00.oauth.labs\n          - server-{suffix}.oauth.labs\n          - client-{suffix}.oauth.labs\n",

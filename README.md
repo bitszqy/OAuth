@@ -1,6 +1,12 @@
 # OAuth 实验平台
 
-本项目 fork 自 [`cyllective/oauth-labs`](https://github.com/cyllective/oauth-labs)，基于上游提交 `5c97e34c8f18ee64a85306037641b12c53b8137a`，使用 MIT 许可证，详见 `LICENSE`。当前保留 `lab00` 基线环境，并加入了实验脚手架、自动检查和 CI。暂未选定或实现具体漏洞。
+本项目 fork 自 [`cyllective/oauth-labs`](https://github.com/cyllective/oauth-labs)，基于上游提交 `5c97e34c8f18ee64a85306037641b12c53b8137a`，使用 MIT 许可证，详见 `LICENSE`。当前保留 `lab00` 基线环境，并加入了实验脚手架、自动检查和 CI。
+
+`lab01` 是一个字段级日历授权原型。项目的安全边界、架构、当前进度和后续工作请查看：
+
+- [威胁模型](docs/threat-model.md)
+- [原型架构](docs/architecture.md)
+- [完整项目链条与当前进度](docs/project-chain.md)
 
 ## 环境要求
 

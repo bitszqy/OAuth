@@ -1,8 +1,12 @@
 package lab00
 
 import (
+	"os"
+	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/cyllective/oauth-labs/configure/internal/constants"
 )
 
 func TestNumberedConfig(t *testing.T) {
@@ -23,5 +27,21 @@ func TestNumberedConfig(t *testing.T) {
 	}
 	if !strings.Contains(client, "max_age: 80400") {
 		t.Fatal("unrelated numeric configuration was changed")
+	}
+}
+
+func TestLab01ClientConfigIncludesCalendarScope(t *testing.T) {
+	original := constants.DockerDir
+	defer func() { constants.DockerDir = original }()
+	constants.DockerDir = t.TempDir()
+
+	Configure("01")
+
+	config, err := os.ReadFile(filepath.Join(constants.DockerDir, "lab01", "client.config.yaml"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !strings.Contains(string(config), "read:calendar") {
+		t.Error("lab01 client config is missing the calendar scope")
 	}
 }

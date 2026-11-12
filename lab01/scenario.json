@@ -1,0 +1,8 @@
+{
+  "id": "lab01",
+  "title": "Calendar task data over-access",
+  "vulnerable_component": "resource-server",
+  "expected_impact": "An application authorized for calendar.freebusy can read event title and description outside the approved task policy.",
+  "reproduction": "reproduce.py",
+  "fixed_comparison": "LAB_VARIANT=fixed"
+}

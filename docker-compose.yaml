@@ -9,6 +9,8 @@ services:
         aliases:
           - server-00.oauth.labs
           - client-00.oauth.labs
+          - server-01.oauth.labs
+          - client-01.oauth.labs
     volumes:
       - ./docker/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
       - ./docker/caddy/config:/config
@@ -67,6 +69,47 @@ services:
       - server-00
     volumes:
       - ./docker/lab00/client.config.yaml:/app/config.yaml
+    networks:
+      - oauth-labs
+    cpus: 1
+    mem_limit: 1g
+
+  server-01:
+    environment:
+      LAB_VARIANT: ${LAB_VARIANT:-fixed}
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.baselab
+      args:
+        LAB_NUMBER: '01'
+        COMPONENT: server
+    depends_on:
+      - caddy
+      - db
+      - valkey
+    volumes:
+      - ./docker/lab01/server.config.yaml:/app/config.yaml
+    networks:
+      - oauth-labs
+    cpus: 1
+    mem_limit: 1g
+
+  client-01:
+    environment:
+      LAB_VARIANT: ${LAB_VARIANT:-fixed}
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.baselab
+      args:
+        LAB_NUMBER: '01'
+        COMPONENT: client
+    depends_on:
+      - caddy
+      - db
+      - valkey
+      - server-01
+    volumes:
+      - ./docker/lab01/client.config.yaml:/app/config.yaml
     networks:
       - oauth-labs
     cpus: 1

@@ -67,6 +67,8 @@ def check(number: str, timeout: int, health_only: bool = False) -> None:
         raise AssertionError("PKCE must use S256")
     if params.get("redirect_uri") != [client + "/callback"]:
         raise AssertionError("unexpected redirect URI")
+    if number != "00" and params.get("task_id") != ["calendar.freebusy"]:
+        raise AssertionError("authorization request missing the default calendar task")
     try:
         fetch(client + "/callback?code=fake&state=fake")
     except HTTPError as error:

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {{ template "meta" }}
+        <title>{{ Labname }} | Calendar task</title>
+        <link rel="stylesheet" type="text/css" href="/static/vendor/fomantic-ui/semantic.min.css">
+        <link rel="stylesheet" type="text/css" href="/static/css/styles.css">
+        <script src="/static/vendor/jquery/jquery.min.js"></script>
+        <script src="/static/vendor/fomantic-ui/semantic.min.js"></script>
+        <script src="/static/js/scripts.js"></script>
+    </head>
+    <body>
+        {{ template "navigation" . }}
+        <main class="ui main text container">
+            <h1 class="ui header">Calendar task</h1>
+            <p>Task: <strong>{{ .TaskID }}</strong></p>
+
+            {{ if .Error }}
+            <div class="ui negative message">
+                <div class="header">Task keys were not released</div>
+                <p>{{ .Error }}</p>
+            </div>
+            {{ else }}
+            <div class="ui info message">
+                <div class="header">Result mode: {{ .View.Mode }}</div>
+                <p>Fields listed as locked below were present in the response but could not be decrypted by this task.</p>
+            </div>
+
+            {{ range .View.Events }}
+            <div class="ui segment">
+                <h2 class="ui header">{{ .ID }}</h2>
+                <p><strong>Start:</strong> {{ index .Values "start" }}</p>
+                <p><strong>End:</strong> {{ index .Values "end" }}</p>
+                {{ if index .Values "title" }}<p><strong>Title:</strong> {{ index .Values "title" }}</p>{{ end }}
+                {{ if index .Values "location" }}<p><strong>Location:</strong> {{ index .Values "location" }}</p>{{ end }}
+                {{ if index .Values "attendees" }}<p><strong>Attendees:</strong> {{ index .Values "attendees" }}</p>{{ end }}
+                {{ if index .Values "description" }}<p><strong>Description:</strong> {{ index .Values "description" }}</p>{{ end }}
+                {{ if .Locked }}<p><strong>Locked:</strong> {{ range $index, $field := .Locked }}{{ if $index }}, {{ end }}{{ $field }}{{ end }}</p>{{ end }}
+            </div>
+            {{ end }}
+            {{ end }}
+        </main>
+    </body>
+</html>

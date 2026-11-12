@@ -28,8 +28,19 @@ class NewLabTests(unittest.TestCase):
             (root / "docker" / "caddy").mkdir(parents=True)
             (root / "docker" / "caddy" / "Caddyfile").write_text("baseline\n")
             (root / "docker-compose.yaml").write_text(
-                "services:\n  caddy:\n    networks:\n      oauth-labs:\n"
-                "        aliases:\n          - client-00.oauth.labs\nsecrets:\n  root: {}\n"
+                "services:\n"
+                "  db:\n"
+                "    networks:\n"
+                "      - oauth-labs\n"
+                "    secrets:\n"
+                "      - db_root_password\n"
+                "  caddy:\n"
+                "    networks:\n"
+                "      oauth-labs:\n"
+                "        aliases:\n"
+                "          - client-00.oauth.labs\n"
+                "secrets:\n"
+                "  db_root_password: {}\n"
             )
 
             with patch.object(new_lab, "ROOT", root):

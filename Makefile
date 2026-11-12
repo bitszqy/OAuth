@@ -8,6 +8,8 @@ build:
 	$(MAKE) -C configure
 	$(MAKE) -C lab00/server
 	$(MAKE) -C lab00/client
+	$(MAKE) -C lab01/server
+	$(MAKE) -C lab01/client
 
 docker:
 	docker compose build
@@ -31,6 +33,8 @@ check:
 	cd oalib && go test ./...
 	cd lab00/server && go test ./...
 	cd lab00/client && go test ./...
+	cd lab01/server && go test ./...
+	cd lab01/client && go test ./...
 
 lab-up:
 	@test -n "$(LAB)" || (echo "Use LAB=00 (two digits)"; exit 1)

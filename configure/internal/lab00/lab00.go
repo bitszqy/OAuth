@@ -21,6 +21,10 @@ func Configure(number string) {
 	}
 	clientID := utils.RandomClientID()
 	registrationSecret := utils.RandomHex(32)
+	calendarScope := ""
+	if number == "01" {
+		calendarScope = "read:calendar"
+	}
 
 	clientConfigFile := filepath.Join(dockerLabDir, "client.config.yaml")
 	t, err := template.New("client_config").Parse(numberedConfig(clientConfigTemplate, number))
@@ -33,6 +37,7 @@ func Configure(number string) {
 		"client_secret":       utils.RandomPassword(32),
 		"registration_secret": registrationSecret,
 		"cookie_secret":       utils.RandomHex(32),
+		"calendar_scope":      calendarScope,
 	})
 
 	serverConfigFile := filepath.Join(dockerLabDir, "server.config.yaml")
@@ -75,6 +80,8 @@ client:
   secret: '{{ .client_secret }}'
   scopes:
     - 'read:profile'
+{{ if .calendar_scope }}    - '{{ .calendar_scope }}'
+{{ end }}
   uri: 'https://client-00.oauth.labs'
   logo_uri: 'https://client-00.oauth.labs/static/img/logo.png'
   redirect_uri: 'https://client-00.oauth.labs/callback'
