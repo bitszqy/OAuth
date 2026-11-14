@@ -46,9 +46,16 @@ python3 scripts/run_experiment.py --lab 01
 
 ## 四、当前状态
 
-Go 单元测试、静态检查、二进制构建和 Python 测试已经通过。
+Docker 端到端实验已经跑通：
 
-Docker 端到端联调尚未执行，因为当前机器没有可访问的 Docker 环境。必须在安装 Docker Desktop 后再运行自动实验。
+~~~text
+lab01: healthy
+lab01 vulnerable: expected outcome confirmed
+lab01: healthy, state and S256 PKCE present, invalid state rejected
+lab01 fixed: expected outcome confirmed
+~~~
+
+Windows 环境搭建和常见错误处理见 [Windows 环境搭建说明](../docs/windows-setup.md)。
 
 ## 五、尚未完成
 

@@ -7,20 +7,33 @@
 - [威胁模型](docs/threat-model.md)
 - [原型架构](docs/architecture.md)
 - [完整项目链条与当前进度](docs/project-chain.md)
+- [Windows 环境搭建说明](docs/windows-setup.md)
 
 ## 环境要求
 
-- Docker Desktop，包含 Docker Compose 和镜像构建功能
-- Go 1.23.2 或更高版本，用于生成配置
-- `server-00.oauth.labs` 和 `client-00.oauth.labs` 解析到 `127.0.0.1`
+完整 Windows 配置步骤见 [Windows 环境搭建说明](docs/windows-setup.md)。
 
-在 `/etc/hosts` 中加入以下内容，需要管理员权限：
+必需环境：
 
-```text
-127.0.0.1 server-00.oauth.labs client-00.oauth.labs
-```
+- Windows 10/11 64 位。
+- Docker Desktop，使用 WSL2 后端。
+- Docker Compose v2。
+- Go 1.23.2 或更高版本，用于生成实验配置。
+- Python 3，用于运行 smoke test 和自动复现脚本。
+- 管理员权限，用于修改 Windows hosts 文件。
 
-本平台只能在可信本机环境运行。Caddy 只绑定本机回环地址。首次访问时可能看到本地 CA 证书警告；确认域名确实是本地实验域名后，再按需要信任该证书。
+Windows hosts 至少加入：
+
+~~~text
+127.0.0.1 server-00.oauth.labs
+127.0.0.1 client-00.oauth.labs
+127.0.0.1 server-01.oauth.labs
+127.0.0.1 client-01.oauth.labs
+~~~
+
+仓库中的 [.gitattributes](.gitattributes) 强制 shell 脚本使用 LF。否则 Windows 的 core.autocrlf 可能把 docker/entrypoint.sh 转成 CRLF，导致容器报 exec /docker-entrypoint.sh: no such file or directory。
+
+本平台只能用于可信本机测试。Caddy 只绑定 127.0.0.1，并使用本地开发证书。
 
 ## 使用流程
 

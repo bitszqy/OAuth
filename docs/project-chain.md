@@ -97,21 +97,20 @@ lab01 已经加入：
 - 服务端和客户端二进制构建通过。
 - Python 8 个测试通过。
 
-## 三、现在还不算完成
+### 9. Docker 端到端验证
 
-### 1. Docker 端到端还没有运行
+Docker 端到端实验已经完成，自动输出：
 
-当前机器没有可访问的 Docker 或 WSL，因此以下内容尚未验证：
+- lab01: healthy
+- lab01 vulnerable: expected outcome confirmed
+- lab01: healthy, state and S256 PKCE present, invalid state rejected
+- lab01 fixed: expected outcome confirmed
 
-- MariaDB 和 Valkey 容器启动。
-- Caddy 本地 HTTPS。
-- 浏览器 OAuth 和 consent 跳转。
-- lab01/reproduce.py 的真实完整流程。
-- scripts/run_experiment.py --lab 01 的 vulnerable/fixed 自动对照。
+这说明 OAuth、consent、任务 grant、字段加密、密钥释放和 vulnerable/fixed 自动对照已经形成完整闭环。
 
-代码可以编译不等于项目已经端到端跑通。
+## 三、仍未完成的安全与评价工作
 
-### 2. 客户端证明还没有实现
+### 1. 客户端证明还没有实现
 
 目前 token 与客户端实例之间还没有强密码学绑定。下一步需要加入以下一种机制：
 
@@ -120,11 +119,11 @@ lab01 已经加入：
 - 客户端公私钥绑定。
 - mTLS。
 
-### 3. 密钥还没有封装给客户端公钥
+### 2. 密钥还没有封装给客户端公钥
 
 现在字段密钥通过 TLS 直接返回。最终方案应使用客户端公钥封装字段密钥，避免 bearer token 本身成为获取密钥的充分条件。
 
-### 4. Capability 和密钥生命周期还没有完成
+### 3. Capability 和密钥生命周期还没有完成
 
 还需要：
 
@@ -135,7 +134,7 @@ lab01 已经加入：
 - 单任务撤销。
 - 撤销后禁止解密未来数据。
 
-### 5. 攻击测试还不够完整
+### 4. 攻击测试还不够完整
 
 还需要测试：
 
@@ -148,7 +147,7 @@ lab01 已经加入：
 - 撤销后再次申请密钥。
 - 只有 token、没有客户端私钥。
 
-### 6. 实验数据还没有测量
+### 5. 实验数据还没有测量
 
 还需要测量：
 
@@ -160,7 +159,7 @@ lab01 已经加入：
 - 响应字节数和密文膨胀比例。
 - 不同事件数量下的扩展性。
 
-### 7. 最终交付物还没有完成
+### 6. 最终交付物还没有完成
 
 还需要：
 
