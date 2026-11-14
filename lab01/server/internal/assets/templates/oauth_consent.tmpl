@@ -19,9 +19,9 @@
                     </div>
                 </h2>
                 <form class="ui large form" action="/consents" method="POST" autocomplete="off">
-                    <input type="text" name="client_id" value="{{ .Client.ID }}" hidden aria-hidden>
-                    <input type="text" name="return_to" value="{{ .ReturnTo }}" hidden aria-hidden>
-                    <input type="text" name="task_id" value="{{ .Task.ID }}" hidden aria-hidden>
+                    <input type="hidden" name="client_id" value="{{ .Client.ID }}">
+                    <input type="hidden" name="return_to" value="{{ .ReturnTo }}">
+                    <input type="hidden" name="task_id" value="{{ .Task.ID }}">
                     <div class="ui left aligned top attached segment" style="padding: 30px;">
                         <div class="content">
                         <p style="font-size: 16px"><strong>{{ .Client.Name }}</strong> wants to perform <strong>{{ .Task.Name }}</strong> and access these calendar fields:</p>

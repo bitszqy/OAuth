@@ -28,7 +28,7 @@ class ConsentParser(HTMLParser):
         if tag != "input":
             return
         attributes = dict(attrs)
-        if attributes.get("type") != "hidden":
+        if attributes.get("type") != "hidden" and "hidden" not in attributes:
             return
         name = attributes.get("name")
         if name:
